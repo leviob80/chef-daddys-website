@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --crimson: #C0141C;
+  --crimson-dark: #9A0F16;
+  --flame: #E8651A;
+  --ember: #F5A623;
+  --brand-black: #111111;
+  --charcoal: #1A1A1A;
+  --charcoal-light: #2D2D2D;
+  --smoke: #F5F0EB;
+  --smoke-dark: #E8E0D8;
+  --white: #FFFFFF;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--brand-black);
+    color: var(--smoke);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-crimson hover:bg-crimson-dark text-white font-body font-bold px-6 py-3 rounded transition-all duration-200 hover:shadow-lg;
+    box-shadow: 0 0 0 transparent;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(192, 20, 28, 0.35);
+  }
+
+  .btn-outline {
+    @apply border-2 border-ember text-ember hover:bg-ember hover:text-brand-black font-body font-bold px-6 py-3 rounded transition-all duration-200;
+  }
+
+  .section-dark {
+    @apply bg-brand-black text-smoke;
+  }
+
+  .section-charcoal {
+    @apply bg-charcoal text-smoke;
+  }
+
+  .section-light {
+    @apply bg-smoke text-brand-black;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1;
+  }
+  .card-hover:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .flame-badge {
+    @apply inline-flex items-center gap-1.5 bg-ember/20 text-ember text-xs font-body font-bold px-3 py-1 rounded-full border border-ember/30;
+  }
+
+  .section-heading {
+    @apply font-display text-4xl sm:text-5xl font-bold;
+  }
+
+  .divider-flame {
+    @apply flex items-center gap-4 my-6;
+  }
+  .divider-flame::before,
+  .divider-flame::after {
+    content: '';
+    @apply flex-1 h-px bg-ember/30;
+  }
+}
+
+@layer utilities {
+  .text-shadow-sm {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .text-shadow {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+  }
+}
+
+/* Order button flame animation */
+.order-btn {
+  position: relative;
+  overflow: hidden;
+}
+.order-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(245, 166, 35, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.order-btn:hover::after {
+  opacity: 1;
+}
+
+/* Hero background */
+.hero-bg {
+  background-color: var(--brand-black);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(232, 101, 26, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(192, 20, 28, 0.06) 0%, transparent 50%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.005) 2px,
+      rgba(255,255,255,0.005) 4px
+    );
+}
+
+/* Smoke texture overlay */
+.smoke-texture {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(192, 20, 28, 0.04) 0%, transparent 70%),
+    linear-gradient(180deg, var(--brand-black) 0%, var(--charcoal) 100%);
+}
+
+/* Menu card image placeholder */
+.img-placeholder {
+  background: linear-gradient(
+    135deg,
+    var(--charcoal-light) 0%,
+    var(--charcoal) 50%,
+    var(--charcoal-light) 100%
+  );
+  background-size: 200% 200%;
+  animation: shimmer 2s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Star rating */
+.stars {
+  color: var(--ember);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--charcoal);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--charcoal-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--crimson);
+}
+
+/* Form styles */
+.form-input {
+  @apply w-full bg-charcoal border border-charcoal-light text-smoke placeholder-smoke/40 rounded-lg px-4 py-3 font-body text-sm transition-colors;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--ember);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15);
+}
+.form-input.error {
+  border-color: var(--crimson);
+}
+.form-label {
+  @apply block text-smoke/80 text-sm font-body font-medium mb-1.5;
+}
+.form-error {
+  @apply text-crimson text-xs font-body mt-1;
+}
+
+/* ── Oswald bold — everywhere except footer ── */
+header,
+header *,
+main,
+main * {
+  font-family: var(--font-oswald), 'Oswald', sans-serif !important;
+  font-weight: 700 !important;
+}

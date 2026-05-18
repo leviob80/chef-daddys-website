@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block admin/api routes from search indexing
+Disallow: /api/
+
+Sitemap: https://www.chefdaddysbbq.com/sitemap.xml
