@@ -66,12 +66,12 @@ const features = [
   {
     title: 'Authentic Soul Food',
     description:
-      "Fried chicken, mac & cheese, collard greens, candied yams — made from real recipes the way it was always intended. This is soul food with soul.",
+      "Smothered porkchops, baked mac & cheese, Mississippi greens, sweet potatoes — made from real recipes the way it was always intended. This is soul food with soul.",
   },
   {
-    title: 'Order Online for Pickup',
+    title: 'Order Online — Your Way',
     description:
-      'Skip the line. Order ahead on our website and your food will be hot and ready when you arrive. Pickup only — because some things are worth the drive.',
+      'Order ahead for pickup on our website and your food will be hot and ready when you arrive. Prefer delivery? We\'re on DoorDash, Grubhub, Uber Eats, Seamless, and Postmates.',
   },
 ];
 
@@ -255,7 +255,7 @@ export default function HomePage() {
               Ready to Order?
             </h2>
             <p className="mt-4 text-white/85 font-body text-lg max-w-xl mx-auto">
-              Order online for pickup. Your food will be fresh and hot when you arrive.
+              Order pickup online and your food will be hot and ready when you arrive — or get it delivered through DoorDash, Grubhub, Uber Eats, Seamless, or Postmates.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link

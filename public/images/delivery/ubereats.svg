@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 56" role="img" aria-label="Uber Eats">
+  <!-- Black rounded square badge -->
+  <rect x="2" y="4" width="48" height="48" rx="12" fill="#000000"/>
+  <!-- Green UE initials in badge -->
+  <text x="26" y="32" text-anchor="middle" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="16" fill="#06C167" dominant-baseline="middle">UE</text>
+  <!-- Uber wordmark in black -->
+  <text x="64" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="19" fill="#000000" dominant-baseline="middle">Uber </text>
+  <!-- Eats in brand green, continuing on same baseline -->
+  <text x="116" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="19" fill="#06C167" dominant-baseline="middle">Eats</text>
+</svg>

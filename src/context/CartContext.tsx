@@ -7,6 +7,7 @@ export interface CartItem {
   name: string;
   priceCents: number;
   quantity: number;
+  selectedSides?: { id: string; name: string }[];
 }
 
 interface CartState {

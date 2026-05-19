@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" role="img" aria-label="DoorDash">
+  <!-- Red icon badge -->
+  <rect x="2" y="4" width="48" height="48" rx="12" fill="#FF3008"/>
+  <!-- Stylised D: outer arc -->
+  <path d="M18 16 h10 c10 0 16 6 16 12 c0 6-6 12-16 12 H18 Z" fill="white"/>
+  <!-- D inner cutout -->
+  <path d="M24 22 h4 c5 0 8 3 8 6 c0 3-3 6-8 6 h-4 Z" fill="#FF3008"/>
+  <!-- DoorDash wordmark -->
+  <text x="62" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="18" fill="#FF3008" dominant-baseline="middle">DoorDash</text>
+</svg>

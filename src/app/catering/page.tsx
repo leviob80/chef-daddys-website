@@ -9,34 +9,34 @@ import AnimatedSection from '@/components/AnimatedSection';
 
 const services = [
   {
-    icon: '🎊',
     title: 'Private Events & Celebrations',
     description: 'Birthdays, anniversaries, graduation parties, family reunions — let Chef Daddy feed the people you love.',
+    image: 'https://images.unsplash.com/photo-1573998835860-99848a59f67f?auto=format&fit=crop&w=800&q=80',
   },
   {
-    icon: '🏢',
     title: 'Corporate Catering',
     description: 'Company lunches, team events, office parties. Impress your team with real BBQ and soul food.',
+    image: 'https://images.unsplash.com/photo-1773409297361-779eb1a270dd?auto=format&fit=crop&w=800&q=80',
   },
   {
-    icon: '⛪',
     title: 'Church Events',
     description: "Feeds the congregation right. Chef Daddy's has catered dozens of church events across St. Louis.",
+    image: 'https://images.unsplash.com/photo-1732850714203-d40cd333968e?auto=format&fit=crop&w=800&q=80',
   },
   {
-    icon: '🎓',
     title: 'School & Community Events',
     description: 'Graduation ceremonies, school fundraisers, block parties. Affordable, delicious, and crowd-friendly.',
+    image: 'https://images.unsplash.com/photo-1768232124647-d09a93d5f521?auto=format&fit=crop&w=800&q=80',
   },
   {
-    icon: '💍',
     title: 'Weddings & Receptions',
     description: 'Make your special day unforgettable with a spread that has guests going back for seconds and thirds.',
+    image: 'https://images.unsplash.com/photo-1745231991466-19d41014cc66?auto=format&fit=crop&w=800&q=80',
   },
   {
-    icon: '🏟️',
     title: 'Large-Scale Events',
-    description: '<!-- PLACEHOLDER: Add your maximum capacity and large-event capabilities here. -->',
+    description: 'From block parties to large community gatherings, we bring the smoke and the soul to feed your crowd.',
+    image: 'https://images.unsplash.com/photo-1761506389871-5f33c25d8057?auto=format&fit=crop&w=800&q=80',
   },
 ];
 
@@ -160,10 +160,25 @@ export default function CateringPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s, i) => (
-              <AnimatedSection key={s.title} delay={i * 100} className="card-hover bg-brand-black border border-charcoal-light rounded-xl p-7">
-                <div className="text-4xl mb-4" aria-hidden="true">{s.icon}</div>
-                <h3 className="font-display text-xl font-bold text-white mb-2">{s.title}</h3>
-                <p className="text-smoke/60 font-body text-sm leading-relaxed">{s.description}</p>
+              <AnimatedSection
+                key={s.title}
+                delay={i * 100}
+                className="card-hover rounded-xl overflow-hidden border border-charcoal-light relative min-h-[220px] flex flex-col justify-end"
+              >
+                {/* Background photo */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url('${s.image}')` }}
+                  role="img"
+                  aria-label={s.title}
+                />
+                {/* Gradient overlay — darker at bottom for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/20" />
+                {/* Content */}
+                <div className="relative z-10 p-7">
+                  <h3 className="font-display text-xl font-bold text-white mb-2">{s.title}</h3>
+                  <p className="text-smoke/80 font-body text-sm leading-relaxed">{s.description}</p>
+                </div>
               </AnimatedSection>
             ))}
           </div>
@@ -206,7 +221,6 @@ export default function CateringPage() {
 
           {status === 'success' ? (
             <AnimatedSection className="text-center bg-brand-black border border-ember/30 rounded-2xl p-12">
-              <div className="text-6xl mb-4">✅</div>
               <h3 className="font-display text-3xl text-white font-bold mb-3">Request Received!</h3>
               <p className="text-smoke/70 font-body">
                 We&apos;ll reach out within 24 hours to discuss your event. Questions? Call us at{' '}

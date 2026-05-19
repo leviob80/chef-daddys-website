@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" role="img" aria-label="Seamless">
+  <!-- Red rounded square badge -->
+  <rect x="2" y="4" width="48" height="48" rx="12" fill="#D81F26"/>
+  <!-- White S -->
+  <text x="26" y="32" text-anchor="middle" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="26" fill="white" dominant-baseline="middle">S</text>
+  <!-- Seamless wordmark in red -->
+  <text x="64" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="18" fill="#D81F26" dominant-baseline="middle">Seamless</text>
+</svg>

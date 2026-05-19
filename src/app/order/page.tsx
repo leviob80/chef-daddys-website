@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { menuSections, MenuCategoryId } from '@/lib/menu-data';
+import { menuSections, MenuCategoryId, MenuItem } from '@/lib/menu-data';
 import { useCart, CartItem } from '@/context/CartContext';
 import AnimatedSection from '@/components/AnimatedSection';
+import SidesModal, { SelectedSide } from '@/components/SidesModal';
 
 type OrderStep = 'browse' | 'checkout' | 'confirmed';
 
@@ -122,13 +123,16 @@ function generatePickupTimes(): string[] {
 export default function OrderPage() {
   const { items, addItem, removeItem, updateQuantity, clearCart, totalCents, itemCount } = useCart();
   const [step, setStep] = useState<OrderStep>('browse');
-  const [activeCategory, setActiveCategory] = useState<MenuCategoryId>('bbq-specialties');
+  const [activeCategory, setActiveCategory] = useState<MenuCategoryId>('barbeque');
   const [addedId, setAddedId] = useState<string | null>(null);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({ name: '', phone: '', pickupTime: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [cartOpen, setCartOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalItem, setModalItem] = useState<MenuItem | null>(null);
+  const [sideSize, setSideSize] = useState<Record<string, 'sm' | 'lg'>>({});
 
   const open = isRestaurantOpen();
   const nextOpenLabel = open ? '' : getNextOpenLabel();
@@ -146,6 +150,30 @@ export default function OrderPage() {
 
   function cartQty(id: string) {
     return items.find((i) => i.id === id)?.quantity ?? 0;
+  }
+
+  function openSidesModal(item: MenuItem) {
+    setModalItem(item);
+    setShowModal(true);
+  }
+
+  function handleSidesConfirm(sides: SelectedSide[]) {
+    if (!modalItem) return;
+    const uniqueId = `${modalItem.id}_${Date.now()}`;
+    addItem({ id: uniqueId, name: modalItem.name, priceCents: modalItem.priceCents, selectedSides: sides });
+    setAddedId(modalItem.id);
+    setTimeout(() => setAddedId(null), 1400);
+    setShowModal(false);
+    setModalItem(null);
+  }
+
+  function handleAddSide(item: MenuItem) {
+    const size = sideSize[item.id] ?? 'sm';
+    const priceCents = size === 'lg' ? 500 : 350;
+    const name = `${item.name} (${size === 'lg' ? 'Large' : 'Small'})`;
+    addItem({ id: `${item.id}_${size}`, name, priceCents });
+    setAddedId(item.id);
+    setTimeout(() => setAddedId(null), 1400);
   }
 
   function validateCheckout(): boolean {
@@ -245,6 +273,35 @@ export default function OrderPage() {
         </p>
       </div>
 
+      {/* Delivery Options */}
+      <div className="bg-brand-black border-b border-charcoal-light py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center gap-3 justify-center">
+          <p className="text-smoke/60 font-body text-sm font-bold flex-shrink-0 whitespace-nowrap">
+            Prefer delivery? Order through:
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {([
+              { name: 'DoorDash',  logo: '/images/delivery/doordash.svg',  href: 'https://www.doordash.com' },
+              { name: 'Grubhub',   logo: '/images/delivery/grubhub.svg',   href: 'https://www.grubhub.com' },
+              { name: 'Uber Eats', logo: '/images/delivery/ubereats.svg',  href: 'https://www.ubereats.com' },
+              { name: 'Seamless',  logo: '/images/delivery/seamless.svg',  href: 'https://www.seamless.com' },
+              { name: 'Postmates', logo: '/images/delivery/postmates.svg', href: 'https://postmates.com' },
+            ] as const).map((p) => (
+              <a
+                key={p.name}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-xl px-4 py-2.5 flex items-center justify-center transition-all hover:opacity-85 hover:shadow-lg hover:shadow-black/30 hover:-translate-y-0.5"
+                aria-label={`Order ${p.name} delivery`}
+              >
+                <img src={p.logo} alt={p.name} className="h-8 w-auto object-contain" loading="lazy" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Closed Banner */}
       {!open && (
         <div className="bg-brand-black border-b border-ember/30">
@@ -322,50 +379,102 @@ export default function OrderPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {activeSection.items.map((item) => {
-                    const qty = cartQty(item.id);
+                    const isSides = activeSection.id === 'sides';
+                    const hasSides = !!activeSection.hasSides;
+                    const selectedSize = sideSize[item.id] ?? 'sm';
+                    const displayPrice = isSides
+                      ? (selectedSize === 'lg' ? '$5.00' : '$3.50')
+                      : item.price;
+                    const qty = cartQty(isSides ? `${item.id}_${selectedSize}` : item.id);
+                    const mealQty = hasSides
+                      ? items.filter((i) => i.id.startsWith(item.id + '_')).reduce((s, i) => s + i.quantity, 0)
+                      : 0;
                     return (
                       <div
                         key={item.id}
                         className="bg-charcoal border border-charcoal-light rounded-xl p-4 flex gap-4 items-start"
                       >
-                        {/* PLACEHOLDER: Replace with actual food thumbnail */}
                         <div className="img-placeholder w-20 h-20 rounded-lg flex-shrink-0" role="img" aria-label={item.imageAlt} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-2">
                             <h3 className="font-body font-semibold text-white text-sm leading-snug">{item.name}</h3>
-                            <span className="text-ember font-body font-bold text-sm whitespace-nowrap">{item.price}</span>
+                            <span className="text-ember font-body font-bold text-sm whitespace-nowrap">{displayPrice}</span>
                           </div>
-                          <p className="text-smoke/50 text-xs font-body mt-1 line-clamp-1">
-                            {/* PLACEHOLDER: Insert actual description */}
-                            Made fresh daily.
-                          </p>
-                          <div className="mt-3 flex items-center gap-2">
-                            {qty > 0 ? (
+                          <p className="text-smoke/50 text-xs font-body mt-1 line-clamp-1">{item.description}</p>
+                          {item.note && (
+                            <p className="text-ember text-[11px] font-body font-bold mt-0.5">{item.note}</p>
+                          )}
+                          <div className="mt-3">
+                            {isSides ? (
+                              <div>
+                                <div className="grid grid-cols-2 rounded overflow-hidden border border-charcoal-light mb-2 text-[11px] font-body font-bold">
+                                  <button
+                                    onClick={() => setSideSize((prev) => ({ ...prev, [item.id]: 'sm' }))}
+                                    className={`py-1.5 transition-colors ${selectedSize === 'sm' ? 'bg-crimson text-white' : 'text-smoke/60 hover:text-smoke'}`}
+                                  >Sm $3.50</button>
+                                  <button
+                                    onClick={() => setSideSize((prev) => ({ ...prev, [item.id]: 'lg' }))}
+                                    className={`py-1.5 transition-colors border-l border-charcoal-light ${selectedSize === 'lg' ? 'bg-crimson text-white' : 'text-smoke/60 hover:text-smoke'}`}
+                                  >Lg $5.00</button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {qty > 0 && (
+                                    <span className="text-ember text-xs font-body font-bold">{qty} in cart</span>
+                                  )}
+                                  <button
+                                    onClick={() => handleAddSide(item)}
+                                    className={`text-xs font-body font-bold py-1.5 px-4 rounded transition-all duration-300 ${
+                                      addedId === item.id ? 'bg-ember text-brand-black' : 'bg-crimson hover:bg-crimson-dark text-white'
+                                    }`}
+                                    aria-label={`Add ${item.name} to order`}
+                                  >
+                                    {addedId === item.id ? '✓ Added' : '+ Add'}
+                                  </button>
+                                </div>
+                              </div>
+                            ) : hasSides ? (
                               <div className="flex items-center gap-2">
+                                {mealQty > 0 && (
+                                  <span className="text-ember text-xs font-body font-bold">{mealQty} in cart</span>
+                                )}
                                 <button
-                                  onClick={() => updateQuantity(item.id, qty - 1)}
-                                  className="w-7 h-7 rounded bg-charcoal-light text-smoke hover:bg-crimson hover:text-white transition-colors text-sm font-bold"
-                                  aria-label={`Remove one ${item.name}`}
-                                >−</button>
-                                <span className="text-white font-body font-bold text-sm w-4 text-center">{qty}</span>
-                                <button
-                                  onClick={() => handleAdd(item)}
-                                  className="w-7 h-7 rounded bg-charcoal-light text-smoke hover:bg-crimson hover:text-white transition-colors text-sm font-bold"
-                                  aria-label={`Add another ${item.name}`}
-                                >+</button>
+                                  onClick={() => openSidesModal(item)}
+                                  className={`text-xs font-body font-bold py-1.5 px-4 rounded transition-all duration-300 ${
+                                    addedId === item.id ? 'bg-ember text-brand-black' : 'bg-crimson hover:bg-crimson-dark text-white'
+                                  }`}
+                                  aria-label={`Add ${item.name} to order`}
+                                >
+                                  {addedId === item.id ? '✓ Added' : '+ Add'}
+                                </button>
                               </div>
                             ) : (
-                              <button
-                                onClick={() => handleAdd(item)}
-                                className={`text-xs font-body font-bold py-1.5 px-4 rounded transition-all duration-300 ${
-                                  addedId === item.id
-                                    ? 'bg-ember text-brand-black'
-                                    : 'bg-crimson hover:bg-crimson-dark text-white'
-                                }`}
-                                aria-label={`Add ${item.name} to order`}
-                              >
-                                {addedId === item.id ? '✓ Added' : '+ Add'}
-                              </button>
+                              <div className="flex items-center gap-2">
+                                {qty > 0 ? (
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      onClick={() => updateQuantity(item.id, qty - 1)}
+                                      className="w-7 h-7 rounded bg-charcoal-light text-smoke hover:bg-crimson hover:text-white transition-colors text-sm font-bold"
+                                      aria-label={`Remove one ${item.name}`}
+                                    >−</button>
+                                    <span className="text-white font-body font-bold text-sm w-4 text-center">{qty}</span>
+                                    <button
+                                      onClick={() => handleAdd(item)}
+                                      className="w-7 h-7 rounded bg-charcoal-light text-smoke hover:bg-crimson hover:text-white transition-colors text-sm font-bold"
+                                      aria-label={`Add another ${item.name}`}
+                                    >+</button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => handleAdd(item)}
+                                    className={`text-xs font-body font-bold py-1.5 px-4 rounded transition-all duration-300 ${
+                                      addedId === item.id ? 'bg-ember text-brand-black' : 'bg-crimson hover:bg-crimson-dark text-white'
+                                    }`}
+                                    aria-label={`Add ${item.name} to order`}
+                                  >
+                                    {addedId === item.id ? '✓ Added' : '+ Add'}
+                                  </button>
+                                )}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -446,9 +555,16 @@ export default function OrderPage() {
                     <h3 className="font-body font-bold text-white mb-4">Order Summary</h3>
                     <div className="space-y-2 mb-4">
                       {items.map((item) => (
-                        <div key={item.id} className="flex justify-between text-sm font-body">
-                          <span className="text-smoke/70">{item.name} × {item.quantity}</span>
-                          <span className="text-smoke">{formatCents(item.priceCents * item.quantity)}</span>
+                        <div key={item.id}>
+                          <div className="flex justify-between text-sm font-body">
+                            <span className="text-smoke/70">{item.name} × {item.quantity}</span>
+                            <span className="text-smoke">{formatCents(item.priceCents * item.quantity)}</span>
+                          </div>
+                          {item.selectedSides && item.selectedSides.length > 0 && (
+                            <p className="text-smoke/40 text-xs font-body pl-3 mt-0.5">
+                              Sides: {item.selectedSides.map((s) => s.name).join(', ')}
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -549,7 +665,12 @@ export default function OrderPage() {
                         <div key={item.id} className="px-5 py-3 border-b border-charcoal-light flex gap-3 items-start">
                           <div className="flex-1 min-w-0">
                             <p className="text-white font-body text-xs font-medium leading-snug truncate">{item.name}</p>
-                            <p className="text-smoke/60 text-xs font-body">{formatCents(item.priceCents)} each</p>
+                            {item.selectedSides && item.selectedSides.length > 0 && (
+                              <p className="text-smoke/40 text-[10px] font-body leading-tight mt-0.5 truncate">
+                                {item.selectedSides.map((s) => s.name).join(' · ')}
+                              </p>
+                            )}
+                            <p className="text-smoke/60 text-xs font-body mt-0.5">{formatCents(item.priceCents)} each</p>
                           </div>
                           <div className="flex items-center gap-1.5 flex-shrink-0">
                             <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-6 h-6 rounded bg-charcoal-light text-smoke hover:bg-crimson hover:text-white text-xs font-bold transition-colors">−</button>
@@ -587,6 +708,15 @@ export default function OrderPage() {
           </div>
         </div>
       </div>
+
+      {/* Sides Selection Modal */}
+      {showModal && modalItem && (
+        <SidesModal
+          itemName={modalItem.name}
+          onConfirm={handleSidesConfirm}
+          onClose={() => { setShowModal(false); setModalItem(null); }}
+        />
+      )}
 
       {/* Mobile Cart Fab */}
       {itemCount > 0 && step === 'browse' && (

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" role="img" aria-label="Grubhub">
+  <!-- Orange-red circle icon -->
+  <circle cx="28" cy="28" r="24" fill="#F63440"/>
+  <!-- Simplified fork handle -->
+  <line x1="28" y1="16" x2="28" y2="40" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- Fork tines -->
+  <line x1="22" y1="16" x2="22" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="34" y1="16" x2="34" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Crossbar connecting tines to handle -->
+  <path d="M22 26 Q28 31 34 26" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Grubhub wordmark -->
+  <text x="64" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="18" fill="#F63440" dominant-baseline="middle">Grubhub</text>
+</svg>

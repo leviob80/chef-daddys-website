@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" role="img" aria-label="Postmates">
+  <!-- Dark rounded square badge -->
+  <rect x="2" y="4" width="48" height="48" rx="12" fill="#1C1C1C"/>
+  <!-- White P -->
+  <text x="26" y="32" text-anchor="middle" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="26" fill="white" dominant-baseline="middle">P</text>
+  <!-- Postmates wordmark in near-black -->
+  <text x="64" y="35" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="18" fill="#1C1C1C" dominant-baseline="middle">Postmates</text>
+</svg>
