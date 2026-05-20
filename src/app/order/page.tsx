@@ -301,25 +301,34 @@ export default function OrderPage() {
 
       {/* Closed Banner */}
       {!open && (
-        <div className="bg-brand-black border-b border-ember/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl" aria-hidden="true">🕐</span>
+        <div className="closed-banner bg-[#C0141C] border-y-2 border-[#7A0A10]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            {/* Status + label */}
+            <div className="flex items-center gap-5">
+              {/* Pulsing dot */}
+              <div className="relative flex-shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-5 w-5 rounded-full bg-white opacity-60 animate-ping" />
+                <span className="relative inline-flex h-5 w-5 rounded-full bg-white" />
+              </div>
               <div>
-                <p className="text-white font-body font-bold text-sm">
-                  We&apos;re currently closed
+                <p className="text-white font-display font-bold text-3xl sm:text-4xl leading-tight tracking-wide">
+                  We&apos;re Currently Closed
                 </p>
-                <p className="text-smoke/60 font-body text-xs mt-0.5">
-                  Sun–Thu: 12 PM – 7 PM &nbsp;·&nbsp; Fri–Sat: 12 PM – 10 PM (Central Time)
+                <p className="text-white/65 font-body text-sm mt-1.5">
+                  Sun–Thu: 12 PM – 7 PM &nbsp;·&nbsp; Fri–Sat: 12 PM – 10 PM CT
                 </p>
               </div>
             </div>
-            <div className="bg-ember/10 border border-ember/40 rounded-lg px-4 py-2.5 text-center flex-shrink-0">
-              <p className="text-ember font-body font-bold text-sm">
-                Next opening: {nextOpenLabel}
+            {/* Next opening pill */}
+            <div className="bg-black/30 border-2 border-white/25 rounded-2xl px-7 py-4 text-center flex-shrink-0 min-w-[230px]">
+              <p className="text-white/60 font-body text-xs uppercase tracking-widest font-bold mb-1">
+                Next Opening
               </p>
-              <p className="text-smoke/60 font-body text-xs mt-0.5">
-                You can still build your order &amp; schedule a future pickup
+              <p className="text-white font-display font-bold text-2xl leading-snug">
+                {nextOpenLabel}
+              </p>
+              <p className="text-white/55 font-body text-xs mt-2">
+                Build your order now &amp; schedule ahead
               </p>
             </div>
           </div>
