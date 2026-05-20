@@ -156,9 +156,7 @@ export default function HomePage() {
       <section className="section-charcoal py-20 sm:py-24" aria-label="Why Chef Daddy's">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
-            <div className="flame-badge mb-4">
-              <span>What Makes Us Different</span>
-            </div>
+
             <h2 className="section-heading text-white">
               No Shortcuts. Just{' '}
               <span className="text-crimson">Smoke & Soul.</span>
@@ -184,9 +182,7 @@ export default function HomePage() {
       <section className="section-dark py-20 sm:py-24" aria-label="Popular menu items">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-14">
-            <div className="flame-badge mb-4">
-              <span>Fan Favorites</span>
-            </div>
+
             <h2 className="section-heading text-white">
               The Crowd&apos;s{' '}
               <span className="text-ember">Go-To&apos;s</span>

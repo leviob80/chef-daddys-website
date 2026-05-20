@@ -124,9 +124,7 @@ export default function CateringPage() {
           style={{ backgroundImage: 'radial-gradient(circle at 50% 100%, #E8651A 0%, transparent 60%)' }}
         />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="flame-badge mb-5 inline-flex">
-            <span>Catering Services</span>
-          </div>
+
           <h1 className="section-heading text-white">
             Let Chef Daddy{' '}
             <span className="text-crimson">Feed Your Crowd</span>

@@ -17,9 +17,7 @@ export default function OurStoryPage() {
         style={{ background: 'linear-gradient(180deg, #1A1A1A 0%, #111111 100%)' }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="flame-badge mb-5 inline-flex">
-            <span>Est. 2015 · St. Louis, MO</span>
-          </div>
+
           <h1 className="section-heading text-white">
             The Story Behind{' '}
             <span className="text-crimson">Chef Daddy&apos;s</span>

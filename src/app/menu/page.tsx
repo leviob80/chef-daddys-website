@@ -76,9 +76,7 @@ export default function MenuPage() {
         style={{ background: 'linear-gradient(180deg, #1A1A1A 0%, #111111 100%)' }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="flame-badge mb-4 inline-flex">
-            <span>Full Menu</span>
-          </div>
+
           <h1 className="section-heading text-white">
             The <span className="text-crimson">Menu</span>
           </h1>
