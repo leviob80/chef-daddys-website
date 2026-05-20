@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import AnimatedSection from '@/components/AnimatedSection';
-import { popularItems } from '@/lib/menu-data';
+import PopularItemsSection from '@/components/PopularItemsSection';
 
 export const metadata: Metadata = {
   title: "Chef Daddy's BBQ & Soul Food | St. Louis, MO | Online Ordering",
@@ -179,60 +179,7 @@ export default function HomePage() {
       </section>
 
       {/* ── POPULAR ITEMS ─────────────────────────────────────── */}
-      <section className="section-dark py-20 sm:py-24" aria-label="Popular menu items">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-14">
-
-            <h2 className="section-heading text-white">
-              The Crowd&apos;s{' '}
-              <span className="text-ember">Go-To&apos;s</span>
-            </h2>
-            <p className="mt-4 text-smoke/70 font-body max-w-xl mx-auto">
-              Can&apos;t decide? Start here. These are the dishes our customers come back for every week.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {popularItems.slice(0, 6).map((item, i) => (
-              <AnimatedSection
-                key={item.id}
-                delay={i * 100}
-                className="card-hover bg-charcoal rounded-xl overflow-hidden border border-charcoal-light"
-              >
-                {/* PLACEHOLDER: Replace with actual food photo */}
-                <div className="img-placeholder h-48 w-full relative" role="img" aria-label={item.imageAlt}>
-                  <div className="absolute inset-0 flex items-center justify-center text-smoke/20 text-xs font-body text-center px-4">
-                    {/* PLACEHOLDER: Replace with real food photo */}
-                    📸 Food photo coming soon
-                  </div>
-                </div>
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-display text-lg font-bold text-white">{item.name}</h3>
-                    <span className="text-ember font-body font-bold text-sm whitespace-nowrap">{item.price}</span>
-                  </div>
-                  <p className="text-smoke/60 text-xs font-body mt-1 line-clamp-2">
-                    {/* PLACEHOLDER: Insert actual item description */}
-                    Slow-smoked to perfection with Chef Daddy&apos;s signature seasoning.
-                  </p>
-                  <Link
-                    href="/order"
-                    className="mt-4 block w-full text-center bg-crimson hover:bg-crimson-dark text-white text-sm font-body font-bold py-2.5 rounded transition-colors"
-                  >
-                    Add to Order
-                  </Link>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="text-center mt-12">
-            <Link href="/menu" className="btn-outline inline-block">
-              View Full Menu →
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
+      <PopularItemsSection />
 
       {/* ── ORDER CTA ─────────────────────────────────────────── */}
       <section
