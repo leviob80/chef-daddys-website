@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sanitizeString, isValidEmail, isValidPhone } from '@/lib/validation';
+import { sanitizeString, isValidEmail, isValidPhone, isValidDate } from '@/lib/validation';
 
 const RATE_LIMIT_MAP = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 3;
@@ -17,8 +17,26 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+function getClientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-real-ip') ??
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    'unknown'
+  );
+}
+
+function isAllowedOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get('origin');
+  if (!origin) return true;
+  return ['https://www.chefdaddysbbq.com', 'https://chefdaddysbbq.com', 'http://localhost:3000'].includes(origin);
+}
+
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown';
+  if (!isAllowedOrigin(req)) {
+    return NextResponse.json({ error: 'Forbidden.' }, { status: 403 });
+  }
+
+  const ip = getClientIp(req);
 
   if (!checkRateLimit(ip)) {
     return NextResponse.json({ error: 'Too many requests.' }, { status: 429 });
@@ -46,7 +64,7 @@ export async function POST(req: NextRequest) {
   if (!name || name.length < 2) return NextResponse.json({ error: 'Invalid name.' }, { status: 400 });
   if (!isValidEmail(email)) return NextResponse.json({ error: 'Invalid email.' }, { status: 400 });
   if (!isValidPhone(phone)) return NextResponse.json({ error: 'Invalid phone.' }, { status: 400 });
-  if (!eventDate) return NextResponse.json({ error: 'Event date required.' }, { status: 400 });
+  if (!eventDate || !isValidDate(eventDate)) return NextResponse.json({ error: 'Event date must be a valid future date.' }, { status: 400 });
   if (!eventType || eventType.length < 2) return NextResponse.json({ error: 'Event type required.' }, { status: 400 });
   const guests = parseInt(guestCount, 10);
   if (isNaN(guests) || guests < 1 || guests > 10000) return NextResponse.json({ error: 'Invalid guest count.' }, { status: 400 });

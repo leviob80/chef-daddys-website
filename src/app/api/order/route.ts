@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sanitizeString, isValidPhone } from '@/lib/validation';
+import { menuSections } from '@/lib/menu-data';
 
 interface OrderItem {
   id: string;
@@ -11,6 +12,15 @@ interface OrderItem {
 const RATE_LIMIT_MAP = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 10;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+
+// Build a canonical price map keyed by base item ID (strips _sm, _lg, _<timestamp> suffixes)
+const MENU_PRICE_MAP = new Map<string, number>(
+  menuSections.flatMap((s) => s.items.map((item) => [item.id, item.priceCents]))
+);
+
+function getBaseItemId(id: string): string {
+  return id.replace(/_(sm|lg|\d+)$/, '');
+}
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -24,6 +34,20 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+function getClientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-real-ip') ??
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    'unknown'
+  );
+}
+
+function isAllowedOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get('origin');
+  if (!origin) return true;
+  return ['https://www.chefdaddysbbq.com', 'https://chefdaddysbbq.com', 'http://localhost:3000'].includes(origin);
+}
+
 function generateOrderNumber(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let result = 'CD-';
@@ -32,7 +56,11 @@ function generateOrderNumber(): string {
 }
 
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown';
+  if (!isAllowedOrigin(req)) {
+    return NextResponse.json({ error: 'Forbidden.' }, { status: 403 });
+  }
+
+  const ip = getClientIp(req);
 
   if (!checkRateLimit(ip)) {
     return NextResponse.json({ error: 'Too many requests.' }, { status: 429 });
@@ -62,7 +90,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No items in order.' }, { status: 400 });
   }
 
-  // Validate item structure (never trust client-side prices)
+  // Validate items against server-side menu — reject unknown IDs and price mismatches
   for (const item of items) {
     if (typeof item.id !== 'string' || typeof item.name !== 'string') {
       return NextResponse.json({ error: 'Invalid item data.' }, { status: 400 });
@@ -70,16 +98,14 @@ export async function POST(req: NextRequest) {
     if (typeof item.quantity !== 'number' || item.quantity < 1 || item.quantity > 50) {
       return NextResponse.json({ error: 'Invalid quantity.' }, { status: 400 });
     }
-    /*
-      IMPORTANT SECURITY NOTE:
-      In production, item prices should be looked up from your server-side price database,
-      NOT trusted from the client payload. Example:
-        const serverItem = await db.menuItems.findById(item.id);
-        if (!serverItem) return error;
-        const trustedPrice = serverItem.priceCents;
-
-      This prevents price manipulation attacks.
-    */
+    const baseId = getBaseItemId(item.id);
+    const canonicalPrice = MENU_PRICE_MAP.get(baseId);
+    if (canonicalPrice === undefined) {
+      return NextResponse.json({ error: 'Unknown menu item.' }, { status: 400 });
+    }
+    if (item.priceCents !== canonicalPrice) {
+      return NextResponse.json({ error: 'Price mismatch.' }, { status: 400 });
+    }
   }
 
   const orderNumber = generateOrderNumber();

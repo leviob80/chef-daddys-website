@@ -17,8 +17,26 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+function getClientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-real-ip') ??
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    'unknown'
+  );
+}
+
+function isAllowedOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get('origin');
+  if (!origin) return true;
+  return ['https://www.chefdaddysbbq.com', 'https://chefdaddysbbq.com', 'http://localhost:3000'].includes(origin);
+}
+
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown';
+  if (!isAllowedOrigin(req)) {
+    return NextResponse.json({ error: 'Forbidden.' }, { status: 403 });
+  }
+
+  const ip = getClientIp(req);
 
   if (!checkRateLimit(ip)) {
     return NextResponse.json({ error: 'Too many requests.' }, { status: 429 });
