@@ -712,7 +712,7 @@ export default function OrderPage() {
       {/* Sides Selection Modal */}
       {showModal && modalItem && (
         <SidesModal
-          itemName={modalItem.name}
+          item={modalItem}
           onConfirm={handleSidesConfirm}
           onClose={() => { setShowModal(false); setModalItem(null); }}
         />
