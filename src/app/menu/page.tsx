@@ -118,7 +118,7 @@ export default function MenuPage() {
 
       {/* Category Tabs */}
       <nav
-        className="sticky top-[72px] z-30 bg-charcoal border-b border-charcoal-light shadow-lg overflow-x-auto"
+        className="sticky top-[172px] z-30 bg-charcoal border-b border-charcoal-light shadow-lg overflow-x-auto"
         aria-label="Menu categories"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

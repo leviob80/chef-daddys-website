@@ -159,7 +159,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style={{display:'none',visibility:'hidden'}} /></noscript> */}
         <CartProvider>
           <Header />
-          <main id="main-content" className="flex-1 pt-[72px]" tabIndex={-1}>
+          <main id="main-content" className="flex-1 pt-[172px]" tabIndex={-1}>
             {children}
           </main>
           <Footer />
