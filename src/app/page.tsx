@@ -51,7 +51,7 @@ const faqSchema = {
       name: "What type of food does Chef Daddy's serve?",
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Chef Daddy's serves authentic St. Louis-style BBQ and soul food including slow-smoked ribs, pulled pork, beef brisket, fried chicken, catfish, mac & cheese, collard greens, and more.",
+        text: "Chef Daddy's serves authentic St. Louis-style BBQ and soul food including slow-smoked rib tips, pork rib slabs, beef back ribs, BBQ porksteak, smothered porkchops, fried catfish fillets, fried wings, baked mac & cheese, Mississippi greens, sweet potatoes, and more.",
       },
     },
   ],
