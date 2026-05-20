@@ -28,7 +28,7 @@ export default function PrivacyPage() {
             <h2 className="font-display text-2xl font-bold text-white mb-3">How We Use Your Information</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>To respond to your inquiries and catering requests</li>
-              <li>To process and confirm pickup orders</li>
+              <li>To process and confirm your orders</li>
               <li>To communicate about your order or event</li>
               <li>We do not sell, rent, or share your personal information with third parties for marketing</li>
             </ul>

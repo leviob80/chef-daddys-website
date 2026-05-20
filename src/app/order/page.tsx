@@ -263,13 +263,10 @@ export default function OrderPage() {
       {/* Page Header */}
       <div className="bg-charcoal border-b border-charcoal-light py-10 text-center">
         <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">
-          Order <span className="text-crimson">Pickup</span> Online
+          Order <span className="text-crimson">Online</span>
         </h1>
         <p className="text-smoke/70 font-body mt-2">
           9617 Saint Charles Rock Road · St. Louis, MO · (314) 222-1488
-        </p>
-        <p className="text-smoke/50 font-body text-xs mt-1">
-          Pickup orders only. Payment collected at pickup.
         </p>
       </div>
 
@@ -587,34 +584,11 @@ export default function OrderPage() {
                   {/* Payment Notice */}
                   <div className="bg-ember/10 border border-ember/30 rounded-xl p-5">
                     <h4 className="font-body font-bold text-ember text-sm mb-2">
-                      💳 Payment at Pickup
+                      Secure Online Payment
                     </h4>
                     <p className="text-smoke/70 text-xs font-body leading-relaxed">
-                      Payment is collected when you pick up your order. We accept cash, credit card, and debit card.
+                      Pay securely online when you place your order. We accept all major credit and debit cards.
                     </p>
-                    {/*
-                      PLACEHOLDER: Online payment integration
-                      To enable online payment, uncomment and configure one of the following:
-
-                      STRIPE:
-                        1. npm install @stripe/stripe-js @stripe/react-stripe-js
-                        2. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in .env.local
-                        3. Import and initialize: import { loadStripe } from '@stripe/stripe-js'
-                        4. Wrap checkout in <Elements stripe={stripePromise}>
-                        5. Add <PaymentElement /> and call stripe.confirmPayment()
-
-                      SQUARE:
-                        1. npm install @square/web-sdk
-                        2. Set NEXT_PUBLIC_SQUARE_APPLICATION_ID and NEXT_PUBLIC_SQUARE_LOCATION_ID in .env.local
-                        3. Initialize: const payments = Square.payments(appId, locationId)
-                        4. Create card: const card = await payments.card(); await card.attach('#card-container')
-
-                      PAYPAL:
-                        1. npm install @paypal/react-paypal-js
-                        2. Set NEXT_PUBLIC_PAYPAL_CLIENT_ID in .env.local
-                        3. Wrap in <PayPalScriptProvider options={{ clientId }}>
-                        4. Add <PayPalButtons createOrder={...} onApprove={...} />
-                    */}
                   </div>
 
                   <button
@@ -631,7 +605,7 @@ export default function OrderPage() {
                   </button>
 
                   <p className="text-smoke/40 text-xs font-body text-center">
-                    By placing this order you agree to pick up at 9617 Saint Charles Rock Road, St. Louis, MO.
+                    Order pickup at 9617 Saint Charles Rock Road, St. Louis, MO.
                   </p>
                 </div>
               </AnimatedSection>

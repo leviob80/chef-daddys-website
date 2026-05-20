@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | Chef Daddy's BBQ & Soul Food | St. Louis, MO",
   },
   description:
-    "Chef Daddy's Bar-B-Que & Soul Food — the best BBQ and soul food in St. Louis, MO since 2015. Slow-smoked ribs, brisket, pulled pork & authentic soul food. Order online for pickup at 9617 Saint Charles Rock Road.",
+    "Chef Daddy's Bar-B-Que & Soul Food — the best BBQ and soul food in St. Louis, MO since 2015. Slow-smoked ribs, brisket, pulled pork & authentic soul food. Order online at 9617 Saint Charles Rock Road.",
   keywords: [
     'BBQ St Louis',
     'Soul Food St Louis',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "Chef Daddy's Bar-B-Que & Soul Food",
     title: "Chef Daddy's BBQ & Soul Food | St. Louis, MO",
     description:
-      "Real BBQ. Real Soul. Real St. Louis. Slow-smoked BBQ and authentic soul food at 9617 Saint Charles Rock Road, St. Louis, MO. Order online for pickup.",
+      "Real BBQ. Real Soul. Real St. Louis. Slow-smoked BBQ and authentic soul food at 9617 Saint Charles Rock Road, St. Louis, MO. Order online.",
     images: [
       {
         // PLACEHOLDER: Replace with actual OG image
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Chef Daddy's BBQ & Soul Food | St. Louis, MO",
-    description: 'Real BBQ. Real Soul. Real St. Louis. Order online for pickup.',
+    description: 'Real BBQ. Real Soul. Real St. Louis. Order online.',
     images: ['/og-image.jpg'],
   },
   robots: {

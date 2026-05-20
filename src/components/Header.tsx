@@ -185,7 +185,7 @@ export default function Header() {
               Order Now {itemCount > 0 && `(${itemCount})`}
             </Link>
             <p className="text-smoke/60 text-xs text-center mt-4 font-body">
-              (314) 222-1488 &nbsp;·&nbsp; Pickup Only
+              (314) 222-1488
             </p>
           </div>
         </nav>

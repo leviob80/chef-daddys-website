@@ -6,7 +6,7 @@ import { popularItems } from '@/lib/menu-data';
 export const metadata: Metadata = {
   title: "Chef Daddy's BBQ & Soul Food | St. Louis, MO | Online Ordering",
   description:
-    "St. Louis' best BBQ and soul food since 2015. Slow-smoked ribs, brisket, fried chicken & more at 9617 Saint Charles Rock Road. Order online for pickup.",
+    "St. Louis' best BBQ and soul food since 2015. Slow-smoked ribs, brisket, fried chicken & more at 9617 Saint Charles Rock Road. Order online.",
   alternates: { canonical: 'https://www.chefdaddysbbq.com' },
 };
 
@@ -27,7 +27,7 @@ const faqSchema = {
       name: "Does Chef Daddy's offer online ordering?",
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Yes! Chef Daddy's offers online ordering for pickup. Visit our Order Online page to place your order.",
+        text: "Yes! Chef Daddy's offers online ordering. Visit our Order Online page to place your order.",
       },
     },
     {
@@ -71,7 +71,7 @@ const features = [
   {
     title: 'Order Online — Your Way',
     description:
-      'Order ahead for pickup on our website and your food will be hot and ready when you arrive. Prefer delivery? We\'re on DoorDash, Grubhub, Uber Eats, Seamless, and Postmates.',
+      'Order ahead on our website and your food will be hot and ready when you arrive. Prefer delivery? We\'re on DoorDash, Grubhub, Uber Eats, Seamless, and Postmates.',
   },
 ];
 
@@ -132,7 +132,7 @@ export default function HomePage() {
               href="/order"
               className="btn-primary order-btn text-base px-8 py-4 inline-block"
             >
-              Order Now — Pickup
+              Order Now
             </Link>
             <Link
               href="/menu"
@@ -255,14 +255,14 @@ export default function HomePage() {
               Ready to Order?
             </h2>
             <p className="mt-4 text-white/85 font-body text-lg max-w-xl mx-auto">
-              Order pickup online and your food will be hot and ready when you arrive — or get it delivered through DoorDash, Grubhub, Uber Eats, Seamless, or Postmates.
+              Order online and your food will be hot and ready when you arrive — or get it delivered through DoorDash, Grubhub, Uber Eats, Seamless, or Postmates.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/order"
                 className="bg-white text-crimson hover:bg-smoke font-body font-black text-base px-10 py-4 rounded transition-all inline-block hover:shadow-xl"
               >
-                Order Pickup Online
+                Order Online
               </Link>
               <a
                 href="tel:+13142221488"

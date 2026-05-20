@@ -86,7 +86,7 @@ export default function MenuPage() {
             Slow-smoked BBQ. Authentic soul food. Made fresh daily in St. Louis, MO.
           </p>
           <Link href="/order" className="btn-primary inline-block mt-8 order-btn">
-            Order for Pickup →
+            Order Online →
           </Link>
         </div>
       </section>
@@ -305,7 +305,7 @@ export default function MenuPage() {
             Ready to Order?
           </h2>
           <p className="text-smoke/70 font-body mt-3">
-            Place your pickup order online and skip the wait.
+            Place your order online and skip the wait.
           </p>
           <Link href="/order" className="btn-primary inline-block mt-6">
             Go to Order Page →
