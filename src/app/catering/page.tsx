@@ -16,7 +16,7 @@ const services = [
   {
     title: 'Corporate Catering',
     description: 'Company lunches, team events, office parties. Impress your team with real BBQ and soul food.',
-    image: 'https://images.unsplash.com/photo-1773409297361-779eb1a270dd?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1741896520047-4727543ec8ee?auto=format&fit=crop&w=800&q=80',
   },
   {
     title: 'Church Events',
